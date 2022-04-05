@@ -1,9 +1,8 @@
 import React from 'react'
 
-const Memory = () => {
-  return (
-    <div>Memory</div>
-  )
+const Memory = ({memory}) => {
+  return <h1>{memory.title} </h1>
+  
 }
 
 export default Memory
