@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Form, Button} from 'react-bootstrap'
 import ReactFileBase64 from 'react-file-base64'
 import * as api from '../axios/index.js'
+import { useNavigate } from 'react-router-dom'
 
 const SubmitMemory = () => {
     const [memoryData, setMemoryData] = useState({
@@ -10,11 +11,13 @@ const SubmitMemory = () => {
         creator: '',
         image: '',
     })
+
+    const navigate = useNavigate()
   return (
     <Form onSubmit={(e)=>{
         e.preventDefault()
         api.createMemory(memoryData)
-
+        navigate('/')
     }}>
         <Form.Group>
             <h1 className='pt-4'>Bir Anıdan Bahset</h1>
