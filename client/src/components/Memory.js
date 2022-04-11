@@ -3,6 +3,7 @@ import { Button, Card } from "react-bootstrap";
 import moment from 'moment'
 import { LinkContainer } from "react-router-bootstrap";
 import {RiEdit2Fill, RiDeleteBin5Line} from 'react-icons/ri'
+import { deleteMemory } from "../axios";
 
 const Memory = ({ memory }) => {
   return (
@@ -17,11 +18,11 @@ const Memory = ({ memory }) => {
         <Card.Subtitle>{moment(memory.createdAt).fromNow()} </Card.Subtitle>
       </Card.Body>
       <Card.Footer style={{display:'flex', justifyContent: 'space-between'}}>
-        <LinkContainer to='/' style={{cursor: 'pointer'}} >
+        <LinkContainer to={`/update/${memory._id}`} style={{cursor: 'pointer'}} >
           <RiEdit2Fill color='white' size='20'/>
 
           </LinkContainer>
-          <RiDeleteBin5Line color="red" size='20' style={{cursor: 'pointer'}}/>
+          <RiDeleteBin5Line color="red" size='20' style={{cursor: 'pointer'}} onClick={() => deleteMemory(memory._id)} />
       </Card.Footer>
     </Card>
   );
