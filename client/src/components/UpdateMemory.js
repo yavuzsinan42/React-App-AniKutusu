@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import {Form, Button} from 'react-bootstrap'
 import ReactFileBase64 from 'react-file-base64'
-import {updateMemory, fetchMemory} from '../axios/index.js'
+import { fetchMemory} from '../axios/index.js'
 import { useNavigate } from 'react-router-dom'
+import { updateMemory} from '../actions/memoryActions'
+import { useDispatch } from 'react-redux'
+
 
 const UpdateMemory = ({id}) => {
+    const dispatch = useDispatch()
     const [memoryData, setMemoryData] = useState({
         title:'',
         content: '',
@@ -22,7 +26,7 @@ const UpdateMemory = ({id}) => {
   return (
     <Form onSubmit={(e)=>{
         e.preventDefault()
-        updateMemory(id,memoryData)
+        dispatch(updateMemory(id,memoryData))
         navigate('/')
     }}>
         <Form.Group>

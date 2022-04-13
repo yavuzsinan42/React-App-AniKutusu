@@ -3,11 +3,13 @@ import { Button, Card } from "react-bootstrap";
 import moment from 'moment'
 import { LinkContainer } from "react-router-bootstrap";
 import {RiEdit2Fill, RiDeleteBin5Line} from 'react-icons/ri'
-import { deleteMemory } from "../axios";
+import { deleteMemory } from "../actions/memoryActions";
+import { useDispatch } from "react-redux";
 
 const Memory = ({ memory }) => {
+  const dispatch = useDispatch()
   return (
-    <Card style={{ width: "18rem" }} className='rounded' >
+    <Card style={{ width: "18rem" }} className='rounded mb-3' >
       <Card.Img variant="top" src={memory.image} />
       <Card.Body>
         <Card.Title style={{color:'orange'}}>{memory.title}</Card.Title>
@@ -22,7 +24,7 @@ const Memory = ({ memory }) => {
           <RiEdit2Fill color='white' size='20'/>
 
           </LinkContainer>
-          <RiDeleteBin5Line color="red" size='20' style={{cursor: 'pointer'}} onClick={() => deleteMemory(memory._id)} />
+          <RiDeleteBin5Line color="red" size='20' style={{cursor: 'pointer'}} onClick={() => dispatch(deleteMemory(memory._id))} />
       </Card.Footer>
     </Card>
   );

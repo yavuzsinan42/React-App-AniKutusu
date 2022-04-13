@@ -5,10 +5,13 @@ import { useDispatch, useSelector} from "react-redux";
 import { fetchMemories } from "../actions/memoryActions.js";
 const HomeScreen = () => {
   const dispatch= useDispatch()
-  useEffect(() => {
-    dispatch(fetchMemories())
-  }, [dispatch])
   const memories = useSelector((state)=>state.memories)
+  useEffect(() => {
+    if(!memories[0]){
+      dispatch(fetchMemories())
+    }
+  }, [dispatch])
+  
   return (
     <>
       <h1 className="pt-2">EN GUNCEL ANILAR</h1>
