@@ -9,6 +9,7 @@ import {
   Container,
 } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import {RiEditBoxLine, RiLoginCircleLine} from "react-icons/ri"
 const Header = () => {
   return (
     <div>
@@ -22,7 +23,20 @@ const Header = () => {
             <Nav>
                 <LinkContainer to="/create">
                     <Nav.Link>
-                        <Button variant="outline-success">Bir Anı Paylaş</Button>
+                        
+                        <Button variant="outline-success">
+                          <RiEditBoxLine  size={20} style={{marginRight: "5px"}} />
+                          Bir Anı Paylaş
+                        </Button>
+                    </Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/auth">
+                    <Nav.Link>
+                        <Button variant="success">
+                          <RiLoginCircleLine size={20} style={{marginRight: "5px"}}/>
+                          Giriş Yap
+                        
+                        </Button>
                     </Nav.Link>
                 </LinkContainer>
             </Nav>
