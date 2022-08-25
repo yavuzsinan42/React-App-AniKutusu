@@ -14,3 +14,5 @@ export const fetchMemory = async (id) => await API.get(`/memories/${id}`)
 export const deleteMemory = async (id) => await API.delete(`/memories/${id}`)
 
 export const updateMemory = async (id,updatedMemory )=> await API.put(`/memories/${id}`, updatedMemory)
+
+export const signUp = async (formData) => await API.post("/users/signup",formData)
