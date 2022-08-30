@@ -13,22 +13,41 @@ import { LinkContainer } from "react-router-bootstrap";
 import {RiEditBoxLine, RiLoginCircleLine, RiLogoutCircleLine} from "react-icons/ri"
 import { useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../actions/userActions";
+import decode from 'jwt-decode'
+import { getRefreshToken } from "../axios";
 const Header = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   const [user,setUser]= useState()
+  const [refreshToken, setRefreshToken]= useState()
   const navigate = useNavigate()
   const exit= async (id) =>{
     await dispatch(logout(id))
     setUser(null)
     navigate("/")
   }
+  const getToken = async (id) =>{
+    const data = await getRefreshToken(id)
+    
+    setRefreshToken(data?.refreshToken)
+  }
   useEffect(()=>{
-    console.log(user);
+   
     if(localStorage.getItem('user')&& !user){
       setUser(JSON.parse(localStorage.getItem('user')))
     }
-    console.log(user);
+    const accessToken = user?.accessToken
+    if(accessToken){
+      const decodedAccessToken = decode(accessToken)
+      if(decodedAccessToken.exp * 1000 < new Date().getTime()){
+        exit(user.user._id)
+      }
+    }
+    if(user){
+      getToken(user.user._id)
+      console.log(refreshToken);
+    }
+    
   },[location,user])
   return (
     <div>

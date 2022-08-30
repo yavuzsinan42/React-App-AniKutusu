@@ -92,4 +92,15 @@ router.get('/logout/:id',async(req,res)=>{
         res.status(500).json(error)
     }
 })
+router.get('/gettoken/:id', async(req,res)=>{
+try {
+    const {id} = req.params
+    const {refreshToken} = await tokenModel.findOne({userId: id})
+    if(!refreshToken) return res.sendStatus(401)
+
+    res.status(200).json({refreshToken})
+} catch (error) {
+    console.log(error?.message);
+}
+})
 export default router
