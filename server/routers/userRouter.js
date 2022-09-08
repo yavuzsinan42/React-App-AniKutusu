@@ -92,13 +92,18 @@ router.get('/logout/:id',async(req,res)=>{
         res.status(500).json(error)
     }
 })
-router.get('/gettoken/:id', async(req,res)=>{
+router.get('/refresh/:id', async(req,res)=>{
 try {
     const {id} = req.params
     const {refreshToken} = await tokenModel.findOne({userId: id})
     if(!refreshToken) return res.sendStatus(401)
 
-    res.status(200).json({refreshToken})
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decodedRefreshToken)=>{
+        if(err) return res.status(403).json(err)
+
+        const accessToken = jwt.sign({email: decodedRefreshToken.email, id: decodedRefreshToken.id}, process.env.ACCESS_TOKEN_SECRET,{expiresIn: '3m'})
+        res.status(200).json(accessToken)
+    })
 } catch (error) {
     console.log(error?.message);
 }

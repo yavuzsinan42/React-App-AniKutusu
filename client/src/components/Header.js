@@ -12,43 +12,44 @@ import {
 import { LinkContainer } from "react-router-bootstrap";
 import {RiEditBoxLine, RiLoginCircleLine, RiLogoutCircleLine} from "react-icons/ri"
 import { useLocation, useNavigate } from "react-router-dom";
-import { logout } from "../actions/userActions";
+import { logout, getAccessToken } from "../actions/userActions";
 import decode from 'jwt-decode'
-import { getRefreshToken } from "../axios";
+
 const Header = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   const [user,setUser]= useState()
-  const [refreshToken, setRefreshToken]= useState()
   const navigate = useNavigate()
   const exit= async (id) =>{
     await dispatch(logout(id))
     setUser(null)
     navigate("/")
   }
-  const getToken = async (id) =>{
-    const data = await getRefreshToken(id)
-    
-    setRefreshToken(data?.refreshToken)
+  
+  const renewAccessToken = async (id) =>{
+    await dispatch(getAccessToken(id))
+    setUser(JSON.parse(localStorage.getItem('user')))
   }
   useEffect(()=>{
    
     if(localStorage.getItem('user')&& !user){
       setUser(JSON.parse(localStorage.getItem('user')))
     }
-    const accessToken = user?.accessToken
-    if(accessToken){
-      const decodedAccessToken = decode(accessToken)
-      if(decodedAccessToken.exp * 1000 < new Date().getTime()){
-        exit(user.user._id)
+    const interval = setInterval(()=>{
+      const accessToken = user?.accessToken
+      if(accessToken){
+        const decodedAccessToken = decode(accessToken)
+        if(decodedAccessToken.exp * 1000 < new Date().getTime()){
+          
+          renewAccessToken(user.user._id)
+        }
       }
-    }
-    if(user){
-      getToken(user.user._id)
-      console.log(refreshToken);
-    }
+    }, 5000)
+   
     
+    return () =>{clearInterval(interval)}
   },[location,user])
+  
   return (
     <div>
       <Navbar bg="info" expand="lg" collapseOnSelect variant="dark">

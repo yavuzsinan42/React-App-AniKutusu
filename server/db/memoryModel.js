@@ -19,6 +19,10 @@ const memoSchema = mongoose.Schema({
     createdAt:{
         type: Date,
         default: new Date()
+    },
+    creatorId: {
+        type: String,
+        required: true
     }
 })
 
