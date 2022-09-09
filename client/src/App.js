@@ -8,8 +8,10 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import UpdateScreen from './Screens/UpdateScreen';
 import AuthScreen from './Screens/AuthScreen';
+import { gapi } from 'gapi-script';
 
 function App() {
+ 
   return (
     <Router>
       <Header/>

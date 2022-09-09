@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { signup,signin } from '../actions/userActions'
 import Message from '../components/Message'
+import { GoogleLogin} from 'react-google-login'
+import { FcGoogle } from 'react-icons/fc'
 
 const AuthScreen = ({}) => {
     const initialFormData = {
@@ -20,6 +22,20 @@ const AuthScreen = ({}) => {
     const [form, setForm] = useState(initialFormData)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const googleSuccess = (res)=>{
+        const user = res?.profileObj
+        const accessToken = res?.tokenId
+        const googleLogin = 'google'
+        try {
+            dispatch({type: 'AUTH', payload: {user, accessToken, googleLogin}})
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const googleFailure = (err)=>{
+        console.log(err);
+    }
   return (
     <>
     <Container>
@@ -58,6 +74,18 @@ const AuthScreen = ({}) => {
                     <Button  type="submit" className="col-12">
                     Giriş Yap
                     </Button>
+                    <GoogleLogin 
+                    clientId="607806607407-eq38l9tecp2ppvp6u5n9ho34rt5io8m5.apps.googleusercontent.com"
+                    onSuccess={googleSuccess}
+                    onFailure={googleFailure}
+                    
+                    render={renderProps=> (
+                        <Button onClick={renderProps.onClick} disabled={renderProps.disabled} className="col-12 mt-2 btn-secondary" >
+                        <FcGoogle size={22} className='text-center' style={{marginRight: '5px'}}/>
+                        Google Hesabınız İle Giriş Yapın
+                        </Button>
+                    )}
+                    />
                     <div className="text-center">
                     <Form.Text as='large' className="text-center ">
                         Henüz bir hesabın yok mu?{' '}<span style={{fontWeight:'bold', cursor: 'pointer'}} onClick={(e)=> setLogin(!login)}> Kayıt Ol</span>

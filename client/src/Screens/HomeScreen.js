@@ -14,7 +14,7 @@ const HomeScreen = () => {
   
   return (
     <>
-      <h1 className="pt-2">EN GUNCEL ANILAR</h1>
+      <h1 className="mt-5 mb-5">EN GUNCEL ANILAR</h1>
       {!memories.length ? (
         <Spinner animation="border" />
       ) : (

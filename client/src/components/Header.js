@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from "react";
-import { useDispatch} from 'react-redux'
+import { useDispatch, useSelector} from 'react-redux'
 import {
   Navbar,
   Nav,
@@ -19,6 +19,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const location = useLocation()
   const [user,setUser]= useState()
+  const userState = useSelector((state)=>state.user)
   const navigate = useNavigate()
   const exit= async (id) =>{
     await dispatch(logout(id))
@@ -27,8 +28,11 @@ const Header = () => {
   }
   
   const renewAccessToken = async (id) =>{
-    await dispatch(getAccessToken(id))
-    setUser(JSON.parse(localStorage.getItem('user')))
+    if(!userState.googleLogin){
+      await dispatch(getAccessToken(id))
+      setUser(JSON.parse(localStorage.getItem('user')))
+    }
+    
   }
   useEffect(()=>{
    
@@ -52,7 +56,7 @@ const Header = () => {
   
   return (
     <div>
-      <Navbar bg="info" expand="lg" collapseOnSelect variant="dark">
+      <Navbar bg="dark" expand="lg" collapseOnSelect variant="dark">
         <Container fluid>
           <LinkContainer to="/">
             <Navbar.Brand href="#">ANI KUTUSU</Navbar.Brand>
