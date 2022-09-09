@@ -11,7 +11,12 @@ import AuthScreen from './Screens/AuthScreen';
 import { gapi } from 'gapi-script';
 
 function App() {
- 
+  gapi.load('client:auth2', () => {
+    gapi.client.init({
+        clientId: 607806607407-eq38l9tecp2ppvp6u5n9ho34rt5io8m5.apps.googleusercontent.com,
+        plugin_name: 'chat',
+    });
+});
   return (
     <Router>
       <Header/>
