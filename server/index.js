@@ -20,7 +20,7 @@ app.listen(process.env.PORT, ()=>{
     console.log(`${process.env.PORT} Portu Dinleniyor`);
     mongoose.connect(process.env.MONGO_URI,{
         useNewUrlParser: true,
-        useUnifiedTopology: true,
+        useUnifiedTopology: true, 
         
     }).then(()=>console.log('database connection success')).catch((err)=>console.log(err))
 })
