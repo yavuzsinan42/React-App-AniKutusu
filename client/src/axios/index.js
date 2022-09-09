@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const  API = axios.create({baseURL: 'https://memory-box-server.netlify.app', withCredentials: true})
+const  API = axios.create({baseURL: 'https://anikutusu.herokuapp.com', withCredentials: true})
 API.interceptors.request.use((req)=>{
     if(localStorage.getItem('user')) {
         req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('user')).accessToken}`
