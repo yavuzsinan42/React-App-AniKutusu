@@ -1,8 +1,10 @@
 # React-App-AniKutusu
 Memory Box App is a memories listing app developed with React and Mongodb. 
 
-In this application, operations such as adding a memory, deleting a memory,  are coded using Mongodb and hooks.
-
+In this application, operations such as adding a memory, deleting a memory, authentication, and Login/Signup  are coded using Mongodb and react.
+![Demo Image](https://i.hizliresim.com/qd2uk57.png)
+![](https://i.hizliresim.com/otcjdus.png)
+[Demo Link](https://memory-box-react.netlify.app/)
 
 
 
